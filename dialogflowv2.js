@@ -43,14 +43,16 @@ module.exports = function(RED) {
       });
 
 
-      var sessionPath = sessionClient.sessionPath(projectId, String(msg._msgid));
+      var sessionPath = (msg.customSession)?msg.customSession:sessionClient.sessionPath(projectId, String(msg._msgid)); //sessionClient.sessionPath(projectId, String(msg._msgid));
       var request = {
         session: sessionPath,
         queryInput: {
           text: {
             text: msg.payload,
             languageCode: language.toLowerCase()
-          }
+          },
+          event: msg.event,
+          queryParams: msg.queryParams
         }
       };
 
