@@ -1,15 +1,15 @@
 {
-  "_from": "node-red-contrib-dialogflowv2-api",
+  "_from": "node-red-contrib-dialogflowv2-api-full",
   "_inBundle": false,
   "_integrity": "sha512-PuLaGoe0wn2eQlMtZKeXq8Vk+id+QJF6gpnB6y3y80j4gURFWh6F/zUelthbkdthltwnlsmUCr8xqBNT00rOWQ==",
-  "_location": "/node-red-contrib-dialogflowv2-api",
+  "_location": "/node-red-contrib-dialogflowv2-api-full",
   "_phantomChildren": {},
   "_requested": {
     "type": "tag",
     "registry": true,
-    "raw": "node-red-contrib-dialogflowv2-api",
-    "name": "node-red-contrib-dialogflowv2-api",
-    "escapedName": "node-red-contrib-dialogflowv2-api",
+    "raw": "node-red-contrib-dialogflowv2-api-full",
+    "name": "node-red-contrib-dialogflowv2-api-full",
+    "escapedName": "node-red-contrib-dialogflowv2-api-full",
     "rawSpec": "",
     "saveSpec": null,
     "fetchSpec": "latest"
@@ -17,11 +17,11 @@
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "https://registry.npmjs.org/node-red-contrib-dialogflowv2-api/-/node-red-contrib-dialogflowv2-api-1.0.0.tgz",
-  "_shasum": "a59eac5d8e40d939cc6ae55c9e817be68933ce77",
-  "_spec": "node-red-contrib-dialogflowv2-api",
+  "_resolved": "https://registry.npmjs.org/node-red-contrib-dialogflowv2-api-full/-/node-red-contrib-dialogflowv2-api-full-1.0.0.tgz",
+  "_shasum": "2d18b93242457d299eab2ac4a3c4ad73f62c1459",
+  "_spec": "node-red-contrib-dialogflowv2-api-full",
   "_where": "C:\\Users\\rgerasimov\\AppData\\Roaming\\npm\\node_modules",
-  "author": "Cleiton Jorge (www.metasix.com.br)",
+  "author": "ceujorge",
   "bugs": {
     "url": "https://github.com/ceujorge/dialogflowv2/issues"
   },
@@ -32,7 +32,8 @@
     "moment": "^2.22.2",
     "prettyjson": "^1.2.1",
     "request": "^2.88.0",
-    "underscore": "^1.9.1"
+    "underscore": "^1.9.1",
+    "pb-util": "^0.1.0"
   },
   "deprecated": false,
   "description": "Dialogflow node for Nore-RED. Support API v2 dialogflow.com",
@@ -42,16 +43,21 @@
   },
   "homepage": "https://github.com/ceujorge/dialogflowv2.git",
   "keywords": [
-    "node-red",
+    "api",
+    "com",
+    "contrib",
     "dialogflow",
+    "dialogflow-com",
+    "dialogflowv",
+    "full",
+    "node",
     "node-red",
-    "dialogflow",
-    "dialogflow.com",
-    "node-red-contrib-dialogflowv2-api"
+    "node-red-contrib-dialogflowv--api-full",
+    "red"
   ],
   "license": "ISC",
   "main": "chatbot=dialogflow.js",
-  "name": "red-contrib-dialogflowv2-api-full",
+  "name": "dialogflow-full-nodered",
   "node-red": {
     "nodes": {
       "dialogflowv2": "dialogflowv2.js"
@@ -64,5 +70,5 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "version": "1.0.4"
+  "version": "1.0.1"
 }
