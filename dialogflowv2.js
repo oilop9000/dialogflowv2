@@ -2,6 +2,7 @@ var _ = require('underscore');
 var utils = require('./lib/helpers/utils');
 var lcd = require('./lib/helpers/lcd');
 var dialogflow = require('dialogflow');
+const {struct} = require('pb-util');
 var when = utils.when;
 
 module.exports = function(RED) {
@@ -17,7 +18,7 @@ module.exports = function(RED) {
     this.on('input', function (msg) {
       var dialogFlowNode = RED.nodes.getNode(node.dialogflow);
       var language = utils.extractValue('string', 'language', node, msg, false);
-      var variable = utils.extractValue('string', 'variable', node, msg, false);
+      var queryParamsOK = utils.extractValue('boolean', 'queryParamsOK', node, msg, false);
       var debug = utils.extractValue('boolean', 'debug', node, msg, false);
 
       // exit if empty credentials
@@ -44,6 +45,24 @@ module.exports = function(RED) {
 
 
       var sessionPath = (msg.customSession)?msg.customSession:sessionClient.sessionPath(projectId, String(msg._msgid)); //sessionClient.sessionPath(projectId, String(msg._msgid));
+      var eventIn = null;
+      if(msg.event)
+      {
+        eventIn = {
+          name: msg.event.name,
+          parameters: struct.encode(msg.event.parameters),
+          languageCode: (msg.event.languageCode)?msg.event.languageCode.toLowerCase():language.toLowerCase();
+        }
+      }
+
+      var queryParamsIn = null;
+      if(queryParamsOK)
+      {
+        msg.queryParams.payload = struct.encode(msg.queryParams.payload);
+        queryParamsIn = msg.queryParams;
+        //{source:"DIALOGFLOW_CONSOLE",timeZone:"America/Sao_Paulo",resetContexts:true,sentimentAnalysisRequestConfig:{analyzeQueryTextSentiment:true}}
+      }
+
       var request = {
         session: sessionPath,
         queryInput: {
@@ -51,9 +70,9 @@ module.exports = function(RED) {
             text: msg.payload,
             languageCode: language.toLowerCase()
           },
-          event: msg.event,
-          queryParams: msg.queryParams
-        }
+          event: eventIn
+        },
+        queryParams = queryParamsIn
       };
 
       var body = null;
@@ -115,3 +134,4 @@ module.exports = function(RED) {
   });
 
 };
+
