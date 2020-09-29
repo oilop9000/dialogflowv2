@@ -51,7 +51,7 @@ module.exports = function(RED) {
         eventIn = {
           name: msg.event.name,
           parameters: struct.encode(msg.event.parameters),
-          languageCode: (msg.event.languageCode)?msg.event.languageCode.toLowerCase():language.toLowerCase();
+          languageCode: (msg.event.languageCode)?msg.event.languageCode.toLowerCase():language.toLowerCase()
         }
       }
 
