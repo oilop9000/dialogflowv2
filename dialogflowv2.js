@@ -13,7 +13,7 @@ module.exports = function(RED) {
     node.dialogflow = config.dialogflow;
     node.language = config.language;
     node.debug = config.debug;
-    node.variable = config.variable;
+    node.queryParamsOK = config.queryParamsOK;
 
     this.on('input', function (msg) {
       var dialogFlowNode = RED.nodes.getNode(node.dialogflow);
@@ -55,14 +55,6 @@ module.exports = function(RED) {
         }
       }
 
-      var queryParamsIn = null;
-      if(queryParamsOK)
-      {
-        msg.queryParams.payload = struct.encode(msg.queryParams.payload);
-        queryParamsIn = msg.queryParams;
-        //{source:"DIALOGFLOW_CONSOLE",timeZone:"America/Sao_Paulo",resetContexts:true,sentimentAnalysisRequestConfig:{analyzeQueryTextSentiment:true}}
-      }
-
       var request = {
         session: sessionPath,
         queryInput: {
@@ -71,9 +63,17 @@ module.exports = function(RED) {
             languageCode: language.toLowerCase()
           },
           event: eventIn
-        },
-        queryParams = queryParamsIn
+        }
       };
+
+      if(queryParamsOK)
+      {
+        if(msg.queryParams.payload)
+          msg.queryParams.payload = struct.encode(msg.queryParams.payload);
+
+        request.queryParams = msg.queryParams;
+        //{source:"DIALOGFLOW_CONSOLE",timeZone:"America/Sao_Paulo",resetContexts:true,sentimentAnalysisRequestConfig:{analyzeQueryTextSentiment:true}}
+      }
 
       var body = null;
 	  

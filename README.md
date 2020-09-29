@@ -1,16 +1,10 @@
-[![NPM](https://nodei.co/npm/node-red-contrib-dialogflowv2-api.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/node-red-contrib-dialogflowv2-api/)
-
-[![npm](https://img.shields.io/npm/dt/node-red-contrib-dialogflowv2-api.svg)](https://www.npmjs.com/package/node-red-contrib-dialogflowv2-api)
-
 # README #
-Dialogflow node for Node-RED. Uses new version API V2.
-Receives a text request for input. As a result, we get the full response from Dialogflow API.
+Dialogflow node for Node-RED. Uses the new API V2 version. with the possibility to use events and queryParams
+You receive a text request for input. As a result, we get the full answer from the Dialogflow API.
+Now improved it receives events and it is also possible to pass queryParams.
 
-The code for the node was forked and slightly simplified. Thank you very much [guidone](https://github.com/guidone "guidone") for [RedBot](https://github.com/guidone/node-red-contrib-chatbot "RedBot")
+The node code was forked and new features were added. Thank you very much [german-st](https://github.com/german-st "german-st") for [dialogflowv2](https://github.com/german-st/dialogflowv2 "dialogflowv2")
 
-### Install ###
-
-Install latest release: `npm i -g node-red-contrib-dialogflowv2-api`
 
 ### Inputs
 
@@ -23,6 +17,41 @@ The text of our request for NLP
 `msg._dialogflow ` *Object*
 
 Result. Object from Dialogflow API response for our text request.
+
+### Details
+
+`msg.payload` Not affected or processed. The output remains the same.
+
+
+### Inputs Events
+
+`msg.payload` *string*
+`msg.events` *Object type event Dialogflow*
+
+The request Dialogflow 
+
+### Outputs
+
+`msg._dialogflow ` *Object*
+
+Result. Object from Dialogflow API response for our request.
+
+### Details
+
+`msg.payload` Not affected or processed. The output remains the same.
+
+### Inputs Events
+
+`msg.payload` *string*
+`msg.queryParams` *Object type queryParams Dialogflow*
+
+The request Dialogflow 
+
+### Outputs
+
+`msg._dialogflow ` *Object*
+
+Result. Object from Dialogflow API response for our request.
 
 ### Details
 

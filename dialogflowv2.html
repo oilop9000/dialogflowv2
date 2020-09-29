@@ -89,14 +89,14 @@
         required: true
       },
       language: {
-        value: 'en',
+        value: 'pt-br',
         required: true
       },
       debug: {
         value: false
       },
-      variable: {
-        value: 'topic'
+      queryParamsOK: {
+        value: false
       }
     },
     inputs: 1,
@@ -165,7 +165,7 @@
       <option value="fa">Persian</option>
       <option value="pl">Polish</option>
       <option value="pt">Portuguese</option>
-      <option value="pt-br">Portuguese-BR</option>
+      <option value="pt-br">Portuguese (Brasil)</option>
       <option value="pa">Punjabi</option>
       <option value="qu">Quechua</option>
       <option value="ro">Romanian</option>
@@ -193,17 +193,17 @@
     </select>
   </div>
   <div class="form-row">
-    <label for="node-input-queryParamsOK">Query Params</label>
+    <label for="node-input-queryParamsOK">QueryParams</label>
     <input type="checkbox" value="false" id="node-input-queryParamsOK">
     <span class="redbot-form-hint">
-      Use the parameter queryParams <p><a href="https://cloud.google.com/dialogflow/es/docs/reference/rpc/google.cloud.dialogflow.v2#queryparameters">Sample</a></p>
+    <p>Use queryParams sample <a target="_blank" href="https://cloud.google.com/dialogflow/es/docs/reference/rpc/google.cloud.dialogflow.v2#queryparameters">here</a></p>
     </span>
   </div>
   <div class="form-row">
     <label for="node-input-debug">Debug</label>
     <input type="checkbox" value="true" id="node-input-debug">
     <span class="redbot-form-hint">
-      Show debug information from Dialogflow.com
+    <p>Show debug information from Dialogflow.com</p>
     </span>
   </div>
 </script>
@@ -212,7 +212,7 @@
 <p>For a complete tutorial about <strong>Dialogflow.com</strong> give a look <a href="https://dialogflow.com/docs/getting-started/building-your-first-agent">here</a>. The <code>Dialogflow.com node</code> sends the text of the incoming message to the <strong>Dialogflow.com</strong> servers, then:</p>
 <ul>
 <li>if no <em>intent</em> is detected, then the incoming message is redirected to the second output</li>
-<li>if an <em>intent</em> is detected, then it&#39;s stored in the context variable <code>topic</code> (or a different variable) and a key/value hash of all relevant information extracted is sent to the first output along with other informations.</li>
+<li>if an <em>intent</em> is detected, QueryParams <code>ueryParams</code> awhen checked it accepts to pass parameters in the query manually. sample <code>{source:"DIALOGFLOW_CONSOLE",timeZone:"America/Sao_Paulo",resetContexts:true,sentimentAnalysisRequestConfig:{analyzeQueryTextSentiment:true}}</code></li>
 </ul>
 <p><strong>Dialogflow.com</strong> is able to create a full featured chatbot, nevertheless it can be used just for the NLP capabilities and to detetect/classify user&#39;s sentences.</p>
 <p>For example, create a <code>Drinks</code> entity with these values</p>
