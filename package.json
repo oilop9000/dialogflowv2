@@ -26,14 +26,14 @@
     "url": "https://github.com/ceujorge/dialogflowv2/issues"
   },
   "dependencies": {
-    "node-pre-gyp": "^0.12.0",
     "cli-color": "^1.4.0",
     "dialogflow": "^0.7.0",
     "moment": "^2.22.2",
+    "node-pre-gyp": "^0.12.0",
+    "pb-util": "^0.1.0",
     "prettyjson": "^1.2.1",
     "request": "^2.88.0",
-    "underscore": "^1.9.1",
-    "pb-util": "^0.1.0"
+    "underscore": "^1.9.1"
   },
   "deprecated": false,
   "description": "Dialogflow node for Nore-RED. Support API v2 dialogflow.com",
@@ -70,5 +70,5 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "version": "1.0.3"
+  "version": "1.0.5"
 }

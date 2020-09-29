@@ -44,7 +44,6 @@ module.exports = function(RED) {
       });
 
       var sessionId = (msg.customSession)?msg.customSession:String(msg._msgid);
-      
       var sessionPath = sessionClient.sessionPath(projectId, sessionId);
       var eventIn = null;
       if(msg.event)
@@ -135,6 +134,3 @@ module.exports = function(RED) {
   });
 
 };
-
-
-curl -H "Content-Type: application/json; charset=utf-8"  -H "Authorization: Bearer ya29.a0AfH6SMAwYEBaBxoWKdn4UeleJPYni5KEmyb_Ph9MZolunvRvYVQ581_qbHA5nLj0ufwXor4FbRQ0tgS7Nf03R6H7-f5viluyhhKc4FhvWxYNNrjP95A80LULmjuBIm1xIofi-l0PMz8sPTzpv7-YuK00xp26tchfySz26n84ICQU4Q"  -d "{\"queryInput\":{\"text\":{\"text\":\"está demorando em?\",\"languageCode\":\"pt-br\"}},\"queryParams\":{\"source\":\"DIALOGFLOW_CONSOLE\",\"timeZone\":\"America/Sao_Paulo\",\"sentimentAnalysisRequestConfig\":{\"analyzeQueryTextSentiment\":true}}}" "https://dialogflow.clients6.google.com/v2beta1/projects/adm-bot-six/locations/global/agent/sessions/0e7110e9-12eb-9d6e-2346-9cf2daab95c4:detectIntent"
