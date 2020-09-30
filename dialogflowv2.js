@@ -17,9 +17,9 @@ module.exports = function(RED) {
 
     this.on('input', function (msg) {
       var dialogFlowNode = RED.nodes.getNode(node.dialogflow);
-      var language = utils.extractValue('string', 'language', node, msg, true);
-      var queryParamsOK = utils.extractValue('boolean', 'queryParamsOK', node, msg, true);
-      var debug = utils.extractValue('boolean', 'debug', node, msg, true);
+      var language = utils.extractValue('string', 'language', node, msg, false);
+      var queryParamsOK = utils.extractValue('boolean', 'queryParamsOK', node, msg, false);
+      var debug = utils.extractValue('boolean', 'debug', node, msg, false);
 
       // exit if empty credentials
       if (dialogFlowNode == null || dialogFlowNode.credentials == null) {
@@ -59,14 +59,14 @@ module.exports = function(RED) {
         session: sessionPath,
         queryInput: {
           text: {
-            text: msg.payload.text,
+            text: msg.payload,
             languageCode: language.toLowerCase()
           },
           event: eventIn
         }
       };
 
-      if(queryParamsOK)
+      if(queryParamsOK || msg.queryParamsOK)
       {
         if(msg.queryParams.payload)
           msg.queryParams.payload = struct.encode(msg.queryParams.payload);
