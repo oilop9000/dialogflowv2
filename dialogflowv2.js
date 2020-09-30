@@ -59,7 +59,7 @@ module.exports = function(RED) {
         session: sessionPath,
         queryInput: {
           text: {
-            text: msg.payload,
+            text: msg.payload.text,
             languageCode: language.toLowerCase()
           },
           event: eventIn
