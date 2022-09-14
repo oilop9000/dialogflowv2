@@ -68,7 +68,7 @@
     "url": "git+https://github.com/ceujorge/dialogflowv2.git"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "debug": "nodemon --ext js,html /usr/local/lib/node_modules/node-red/red.js"
   },
   "version": "1.0.10"
 }
