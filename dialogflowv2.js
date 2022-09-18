@@ -6,6 +6,7 @@ var moment = require('moment');
 const {struct} = require('pb-util');
 const { includes } = require('underscore');
 var when = utils.when;
+var jsonata = require('jsonata');
 
 module.exports = function(RED) {
 
@@ -19,18 +20,17 @@ module.exports = function(RED) {
      
     
     var indexOb = function(obj,is, value) {
-      if (typeof is == 'string')
+      if (typeof is == 'string' )
           return indexOb(obj,is.split('.'), value);
       else if (is.length==1 && value!==undefined)
-          return obj[is[0]] = value;
-      else if (is.length==0)
+          return obj[is[0]] = value;  
+      else if (is.length==0){
           return obj;
-      else if(typeof(obj[is[0]]) != "undefined"){ 
-          return indexOb(obj[is[0]],is.slice(1), value)
       }else{
-          return false;
+        typeof obj[is[0]] == 'undefined'? obj[is[0]]={}:obj[is[0]];
+        return indexOb(obj[is[0]],is.slice(1), value)
       }
-    } 
+    }  
 
     this.on('input', function (msg) {
       var dialogFlowNode = RED.nodes.getNode(node.dialogflow);
@@ -38,19 +38,7 @@ module.exports = function(RED) {
       var debug = utils.extractValue('boolean', 'debug', node, msg, false);
       var textField = utils.extractValue('string', 'textField', node, msg, false);
 
-      //Check if textField has valid chars and length
-      if(textField)
-      {
-        if (/^[\w\d.\-]{3,40}$/m.test(textField)) {
-          var text =  indexOb(msg,textField);
-        } else {
-        return;
-        }
-      }
-
       
-      
-
       // exit if empty credentials
       if (dialogFlowNode == null || dialogFlowNode.credentials == null) {
         lcd.warn('Dialogflow.ai credentials are missing.');
@@ -60,6 +48,19 @@ module.exports = function(RED) {
       if (_.isEmpty(language)) {
         node.error('Language param is empty in Dialogflow node');
         return;
+      }
+      if (_.isEmpty(textField)) {
+        node.error('text field param is empty in Dialogflow node');
+        return;
+      }
+      //Check if textField has valid chars and length
+      if(textField)
+      {
+        if (/^[\w\d.\-]{3,40}$/m.test(textField)) {
+          var text =  indexOb(msg,textField);
+        } else {
+        return;
+        }
       }
 
       var email = dialogFlowNode.credentials.email;
@@ -83,33 +84,28 @@ module.exports = function(RED) {
       };
 
       if(msg.event)
-      {
-        var client = new dialogflow.IntentsClient({
-          credentials: {
-            private_key: privateKey,
-            client_email: email
-          }
-        });
-          
-        // // Iterate over all elements.
-        // var formattedParent = client.projectAgentPath(projectId);
-        // var projIntents = {};
-        // client.listIntents({parent: formattedParent})
-        //   .then(responses => {
-        //     msg.projIntents = responses[0];
-        //     // for (let i = 0; i < resources.length; i += 1) {
-        //     //   // doThingsWith(resources[i])
-        //     // }
-        //   })
-        //   .catch(err => {
-        //     console.error(err);
-        //   });
-
-        request.queryInput.event = {
+        {
+          request.queryInput.event = {
           name: msg.event.name,
           parameters: struct.encode(msg.event.parameters),
           languageCode: (msg.event.languageCode)?msg.event.languageCode.toLowerCase():language.toLowerCase()
         }
+        //Check if given event requires context
+        var expression = jsonata("intents#$i['" + msg.event.name.toUpperCase() + "' in events]");
+        var result = expression.evaluate({ "intents": this.context().flow.get("intents") });
+        // msg.tipo = typeof (result.inputContextNames);
+        typeof (msg.queryParams) == 'undefined' ? msg.queryParams = {} : msg.queryParams;
+        if (typeof(result.inputContextNames) != 'undefined'){
+        var contexts = [];
+            result.inputContextNames.forEach(function(element) {
+                contexts.push({
+                    "name": element,
+                    "parameters": {},
+                    "lifespanCount": 1
+                });
+            });
+        }
+        msg.queryParams.contexts = contexts; 
       }
 
       if(text)
@@ -124,7 +120,7 @@ module.exports = function(RED) {
       {
         if(msg.queryParams.payload)
           msg.queryParams.payload = struct.encode(msg.queryParams.payload);
-        request.queryParams = msg.queryParams;        
+        request.queryParams = msg.queryParams;  
       }
 
       var body = null;
@@ -153,7 +149,8 @@ module.exports = function(RED) {
           //Result output
           msg._dialogflow = body[0].queryResult;
           //Graba el texto de salida en caso de que se reciba texto de entrada  
-          indexOb(msg,textField,body[0].queryResult.fulfillmentText)
+          indexOb(msg,textField,body[0].queryResult.fulfillmentText);
+          // msg.payload = body[0].queryResult.fulfillmentText;  
           if (debug) {
             lcd.node(msg.payload, { node: node, title: 'Dialogflow-V2.com' });
           }

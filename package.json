@@ -33,7 +33,8 @@
     "pb-util": "^0.1.0",
     "prettyjson": "^1.2.1",
     "request": "^2.88.0",
-    "underscore": "^1.9.1"
+    "underscore": "^1.9.1",
+    "jsonata": "^1.8.6"
   },
   "deprecated": false,
   "description": "Dialogflow node for Nore-RED. Support API v2 dialogflow.com",
