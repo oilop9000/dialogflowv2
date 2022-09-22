@@ -1,7 +1,7 @@
 var _ = require('underscore');
 var utils = require('./lib/helpers/utils');
 var lcd = require('./lib/helpers/lcd');
-var dialogflow = require('dialogflow');
+var dialogflow = require('@google-cloud/dialogflow');
 var moment = require('moment');
 const {struct} = require('pb-util');
 const { includes } = require('underscore');
@@ -65,7 +65,7 @@ module.exports = function(RED) {
 
       var email = dialogFlowNode.credentials.email;
       var privateKey = dialogFlowNode.credentials.privateKey;
-      var projectId = dialogFlowNode.credentials.projectId;
+      const projectId = dialogFlowNode.credentials.projectId;
 
       var sessionClient = new dialogflow.SessionsClient({
         credentials: {
@@ -74,8 +74,9 @@ module.exports = function(RED) {
         }
       });
 
-      var sessionId = (msg.customSession)?msg.customSession:String(msg._msgid);
-      var sessionPath = sessionClient.sessionPath(projectId, sessionId);
+      const sessionId = (msg.customSession)?msg.customSession:String(msg._msgid);
+      var sessionPath = sessionClient.projectAgentSessionPath(projectId,sessionId);
+      // var sessionPath = sessionClient.sessionPath(projectId, sessionId);
 
       var request = {
         session: sessionPath,
@@ -96,6 +97,7 @@ module.exports = function(RED) {
         // msg.tipo = typeof (result.inputContextNames);
         typeof (msg.queryParams) == 'undefined' ? msg.queryParams = {} : msg.queryParams;
         if (typeof(result.inputContextNames) != 'undefined'){
+          //Establecer los contextos de entrada 
         var contexts = [];
             result.inputContextNames.forEach(function(element) {
                 contexts.push({
