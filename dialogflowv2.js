@@ -4,7 +4,6 @@ var lcd = require('./lib/helpers/lcd');
 var dialogflow = require('@google-cloud/dialogflow');
 var moment = require('moment');
 const {struct} = require('pb-util');
-const { includes } = require('underscore');
 var when = utils.when;
 var jsonata = require('jsonata');
 

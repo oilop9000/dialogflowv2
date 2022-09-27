@@ -56,7 +56,7 @@
     "red"
   ],
   "license": "ISC",
-  "main": "chatbot=dialogflow.js",
+  "main": "dialogflowv2.js",
   "name": "dialogflow-full-nodered",
   "node-red": {
     "nodes": {
@@ -68,7 +68,7 @@
     "url": "git+https://github.com/ceujorge/dialogflowv2.git"
   },
   "scripts": {
-    "debug": "nodemon --ext js,html /usr/local/lib/node_modules/node-red/red.js"
+    "debug": "nodemon --ext js,html /usr/src/node-red/node_modules/node-red/red.js"
   },
   "version": "1.0.10"
 }
